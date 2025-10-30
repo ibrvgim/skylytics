@@ -1,16 +1,16 @@
 import Logo from './Logo';
 import SearchEngine from './SearchEngine';
-import UnitsSettings from './UnitsSettings';
+import UnitsSettingsButton from './UnitsSettingsButton';
 
 function Navigation() {
   return (
     <nav>
       <div className='mb-14 flex items-center justify-between'>
         <Logo />
-        <UnitsSettings />
+        <UnitsSettingsButton />
       </div>
 
-      <p className='text-4xl text-center font-bold tracking-wider mb-12'>
+      <p className='mb-12 text-center text-4xl font-bold tracking-wider'>
         How's the sky looking today?
       </p>
 
