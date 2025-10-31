@@ -50,6 +50,11 @@ function HourlyForecast() {
           degree='7°'
           time='13:00'
         />
+        <HourlyForecastItem
+          iconPath='icon-rain.webp'
+          degree='7°'
+          time='13:00'
+        />
       </ul>
     </div>
   );
