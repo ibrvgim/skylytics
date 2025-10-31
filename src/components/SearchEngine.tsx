@@ -1,7 +1,13 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { MdGpsFixed } from 'react-icons/md';
+import useGeolocation from '../hooks/useGeolocation';
 
 function SearchEngine() {
+  const [position, error, requestAgain] = useGeolocation();
+
+  console.log('Position', position);
+  console.log('Error', error);
+
   return (
     <div className='relative mx-auto w-1/3'>
       <label
@@ -22,6 +28,7 @@ function SearchEngine() {
       <button
         className='absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer'
         title='Detect the location'
+        onClick={requestAgain}
       >
         <MdGpsFixed className='size-5 text-gray-300 transition-all duration-200 hover:text-white' />
       </button>
