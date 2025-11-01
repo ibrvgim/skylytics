@@ -3,7 +3,11 @@ import Logo from './Logo';
 import SearchEngine from './SearchEngine';
 import UnitsSettingsButton from './UnitsSettingsButton';
 
-function Navigation() {
+function Navigation({
+  requestGeolocation,
+}: {
+  requestGeolocation: () => void;
+}) {
   return (
     <nav>
       <div className='mb-14 flex items-center justify-between'>
@@ -19,7 +23,7 @@ function Navigation() {
         How's the sky looking today?
       </p>
 
-      <SearchEngine />
+      <SearchEngine requestGeolocation={requestGeolocation} />
     </nav>
   );
 }

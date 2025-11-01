@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface InitialStateType {
   position: [number, number] | null;
@@ -10,13 +11,10 @@ const initialState: InitialStateType = {
   error: null,
 };
 
-function useGeolocation(): [
-  [number, number] | null,
-  string | null,
-  () => void,
-] {
+function useGeolocation(): [[number, number] | null, boolean, () => void] {
   const [locationData, setLocationData] = useState(initialState);
   const [trigger, setTrigger] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   function requestAgain() {
     setTrigger((count) => count + 1);
@@ -32,6 +30,8 @@ function useGeolocation(): [
       return;
     }
 
+    setIsLoading(true);
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -40,7 +40,10 @@ function useGeolocation(): [
           position: [latitude, longitude],
           error: null,
         });
+        setError(null);
+        setIsLoading(false);
       },
+
       (error) => {
         switch (error.code) {
           case error.PERMISSION_DENIED:
@@ -59,12 +62,17 @@ function useGeolocation(): [
           default:
             setError('An unknown error occurred. Please try again later.');
         }
+
+        setIsLoading(false);
       },
+
       { enableHighAccuracy: true, maximumAge: 0 },
     );
-  }, [trigger]);
 
-  return [locationData.position, locationData.error, requestAgain];
+    if (locationData.error) toast.error(locationData.error);
+  }, [trigger, locationData.error]);
+
+  return [locationData.position, isLoading, requestAgain];
 }
 
 export default useGeolocation;
