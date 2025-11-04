@@ -1,55 +1,45 @@
-function WeeklyForecast({ isLoading }: { isLoading: boolean }) {
+import { useUnits } from '../contexts/UnitsContext';
+import type { WeeklyForecastType } from '../types/forecast';
+import { formatWeekdays } from '../utils/dates';
+import { detectIcon } from '../utils/icons';
+
+function WeeklyForecast({
+  weeklyForecast,
+  isLoading,
+}: {
+  weeklyForecast: WeeklyForecastType[] | undefined;
+  isLoading: boolean;
+}) {
+  const { temperatureUnit } = useUnits();
+
   return (
     <div>
       <p className='mb-5 text-lg font-medium'>Weekly Forecast</p>
 
       <ul className='flex justify-between gap-2'>
         {isLoading ? (
-          Array.from({ length: 7 }).map(() => <DailyForecastLoadingItem />)
+          Array.from({ length: 7 }, (_, index) => index + 1).map((val) => (
+            <DailyForecastLoadingItem key={val} />
+          ))
         ) : (
           <>
-            <DailyForecastItem
-              weekday='Monday'
-              iconPath='icon-drizzle.webp'
-              earlyDegree='16°'
-              lateDegree='7°'
-            />
-            <DailyForecastItem
-              weekday='Tuesday'
-              iconPath='icon-fog.webp'
-              earlyDegree='16°'
-              lateDegree='7°'
-            />
-            <DailyForecastItem
-              weekday='Wednesday'
-              iconPath='icon-sunny.webp'
-              earlyDegree='16°'
-              lateDegree='7°'
-            />
-            <DailyForecastItem
-              weekday='Thursday'
-              iconPath='icon-partly-cloudy.webp'
-              earlyDegree='16°'
-              lateDegree='7°'
-            />
-            <DailyForecastItem
-              weekday='Friday'
-              iconPath='icon-rain.webp'
-              earlyDegree='16°'
-              lateDegree='7°'
-            />
-            <DailyForecastItem
-              weekday='Saturday'
-              iconPath='icon-snow.webp'
-              earlyDegree='16°'
-              lateDegree='7°'
-            />
-            <DailyForecastItem
-              weekday='Sunday'
-              iconPath='icon-storm.webp'
-              earlyDegree='16°'
-              lateDegree='7°'
-            />
+            {weeklyForecast?.map((val) => (
+              <DailyForecastItem
+                key={val.date.toString()}
+                weekday={formatWeekdays(val.date)}
+                iconPath={detectIcon(val.condition.code)}
+                minDegree={
+                  temperatureUnit === 'celsius'
+                    ? val.minTemperatureCelsius
+                    : val.minTemperatureFahrenheit
+                }
+                maxDegree={
+                  temperatureUnit === 'celsius'
+                    ? val.maxTemperatureCelsius
+                    : val.maxTemperatureFahrenheit
+                }
+              />
+            ))}
           </>
         )}
       </ul>
@@ -60,27 +50,27 @@ function WeeklyForecast({ isLoading }: { isLoading: boolean }) {
 function DailyForecastItem({
   weekday,
   iconPath,
-  earlyDegree,
-  lateDegree,
+  minDegree,
+  maxDegree,
 }: {
-  weekday: string;
-  iconPath: string;
-  earlyDegree: string;
-  lateDegree: string;
+  weekday: string | undefined;
+  iconPath: string | undefined;
+  minDegree: number;
+  maxDegree: number;
 }) {
   return (
     <li className='flex-1 rounded-md border border-sky-700 bg-sky-800 p-4 text-center shadow-sm'>
-      <p className='text-sm font-semibold uppercase'>{weekday.slice(0, 3)}</p>
+      <p className='text-sm font-semibold uppercase'>{weekday}</p>
       <img
         src={`/icons/${iconPath}`}
-        alt='icon drizzle'
+        alt={iconPath}
         className='mx-auto my-4'
         draggable={false}
       />
 
-      <span className='flex justify-between text-lg'>
-        <span>{earlyDegree}</span>
-        <span>{lateDegree}</span>
+      <span className='flex justify-between'>
+        <span>{`${minDegree}°`}</span>
+        <span>{`${maxDegree}°`}</span>
       </span>
     </li>
   );

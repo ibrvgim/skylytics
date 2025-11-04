@@ -1,12 +1,10 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { FaBan } from 'react-icons/fa';
 import { cutWords } from '../utils/strings';
 import { useEffect, useRef } from 'react';
 
 function FavoritesContainer() {
   const inputElement = useRef<HTMLInputElement | null>(null);
-  // temp
-  const isEmpty = false;
+  const favoritePlaces = [];
 
   useEffect(() => {
     if (inputElement.current) {
@@ -16,36 +14,27 @@ function FavoritesContainer() {
 
   return (
     <div className='absolute top-11 right-0 z-10 w-80 rounded-md border border-sky-700 bg-sky-800 px-2 py-3 shadow-md'>
-      <div className='relative w-full'>
-        <label
-          className='absolute top-1/2 left-3 -translate-y-1/2 text-gray-200'
-          htmlFor='searchCity'
-        >
-          <MagnifyingGlassIcon className='h-5 w-5' />
-        </label>
-
-        <input
-          ref={inputElement}
-          id='searchCity'
-          name='searchCity'
-          type='search'
-          placeholder='Search for a city...'
-          className='w-full rounded-md border border-sky-500 bg-sky-700 px-10 py-2 text-sm shadow-sm placeholder:text-sm focus:outline focus:outline-sky-500'
-        />
-      </div>
-
-      {isEmpty ? (
-        <span className='mt-6 mb-2 flex flex-col items-center justify-center gap-2 text-gray-200'>
+      {favoritePlaces.length <= 0 ? (
+        <span className='flex flex-col items-center justify-center gap-2 py-3 text-gray-200'>
           <span>
-            <FaBan className='size-8 text-gray-200' />
+            <FaBan className='mb-1 size-8 text-gray-200' />
           </span>
 
           <p>No Places saved yet.</p>
           <p className='text-xs text-gray-200'>( max. 5 cities )</p>
         </span>
       ) : (
-        <ul className='mt-4 *:not-last:mb-2'>
-          <li>
+        <ul className='*:not-last:mb-2'>
+          {favoritePlaces.map((place) => (
+            <li>
+              <FavoriteItem
+                location={place}
+                iconPath='icon-partly-cloudy.webp'
+                degree='7°'
+              />
+            </li>
+          ))}
+          {/* <li>
             <FavoriteItem
               location='Berlin, Germany'
               iconPath='icon-partly-cloudy.webp'
@@ -83,7 +72,7 @@ function FavoritesContainer() {
               iconPath='icon-storm.webp'
               degree='11°'
             />
-          </li>
+          </li> */}
         </ul>
       )}
     </div>

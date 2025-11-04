@@ -1,12 +1,30 @@
 import { StarIcon } from '@heroicons/react/24/solid';
+import { formatDate } from '../utils/dates';
+import { useUnits } from '../contexts/UnitsContext';
 
 function CurrentForecast({
   locationName,
+  currentDate,
+  weatherIcon,
+  currentDegree,
+  feelslike,
+  humidity,
+  windVelocity,
+  currentPrecipitation,
   isLoading,
 }: {
-  locationName: string;
+  locationName: string | undefined;
+  currentDate: Date | undefined;
+  weatherIcon: string | undefined;
+  currentDegree: number | undefined;
+  feelslike: number | undefined;
+  humidity: number | undefined;
+  windVelocity: number | undefined;
+  currentPrecipitation: number | undefined;
   isLoading: boolean;
 }) {
+  const { windSpeed, precipitation } = useUnits();
+
   return (
     <div>
       <div className='relative flex h-72 items-center justify-between bg-[url(/images/bg-today.svg)] bg-cover bg-center bg-no-repeat px-12 py-20'>
@@ -25,17 +43,17 @@ function CurrentForecast({
               <p className='mb-2 text-4xl font-bold -tracking-wide'>
                 {locationName}
               </p>
-              <p>Monday, October 30, 2025</p>
+              <p>{formatDate(currentDate)}</p>
             </span>
 
             <span className='flex items-center gap-2 text-7xl font-bold'>
               <img
-                src='/icons/icon-partly-cloudy.webp'
-                alt='partly cloudy icon'
+                src={`/icons/${weatherIcon}`}
+                alt={weatherIcon}
                 className='h-32 w-32'
                 draggable={false}
               />
-              14°
+              {`${currentDegree}°`}
             </span>
           </>
         )}
@@ -44,22 +62,30 @@ function CurrentForecast({
       <ul className='mt-6 flex justify-between gap-3'>
         <ConditionItem
           title='Feels like'
-          value={isLoading ? '-/-' : '7°'}
+          value={isLoading ? '-/-' : `${feelslike}°`}
           iconPath='temperature.png'
         />
         <ConditionItem
           title='Humidity'
-          value={isLoading ? '-/-' : '46%'}
+          value={isLoading ? '-/-' : `${humidity}%`}
           iconPath='humidity.png'
         />
         <ConditionItem
           title='Wind velocity'
-          value={isLoading ? '-/-' : '14 km/h'}
+          value={
+            isLoading
+              ? '-/-'
+              : `${windVelocity} ${windSpeed === 'kmh' ? 'km/h' : 'mph'}`
+          }
           iconPath='wind.png'
         />
         <ConditionItem
           title='Precipitation'
-          value={isLoading ? '-/-' : '0 mm'}
+          value={
+            isLoading
+              ? '-/-'
+              : `${currentPrecipitation} ${precipitation === 'mm' ? 'mm' : 'in'}`
+          }
           iconPath='precipitation.png'
         />
       </ul>

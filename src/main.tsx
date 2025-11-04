@@ -4,11 +4,14 @@ import './index.css';
 import App from './App.tsx';
 import { Toaster } from 'react-hot-toast';
 import { UnitsContextProvider } from './contexts/UnitsContext.tsx';
+import { PlacesContextProvider } from './contexts/PlacesContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UnitsContextProvider>
-      <App />
+      <PlacesContextProvider>
+        <App />
+      </PlacesContextProvider>
     </UnitsContextProvider>
     <Toaster
       position='top-center'

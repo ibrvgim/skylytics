@@ -1,7 +1,7 @@
 export interface ForecastType {
   country: string;
   city: string;
-  localTime: string;
+  localTime: Date;
   condition: ConditionType;
   temperatureCelsius: number;
   temperatureFahrenheit: number;
@@ -13,13 +13,23 @@ export interface ForecastType {
   precipitationMM: number;
   precipitationIN: number;
   hourlyForecast: HourlyForecastType[];
+  weeklyForecast: WeeklyForecastType[];
 }
 
-type HourlyForecastType = {
+export type WeeklyForecastType = {
+  condition: ConditionType;
+  date: Date;
+  maxTemperatureCelsius: number;
+  maxTemperatureFahrenheit: number;
+  minTemperatureCelsius: number;
+  minTemperatureFahrenheit: number;
+};
+
+export type HourlyForecastType = {
   condition: ConditionType;
   temperatureCelsius: number;
   temperatureFahrenheit: number;
-  time: string;
+  time: Date;
 };
 
 export type ConditionType = {

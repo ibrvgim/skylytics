@@ -2,32 +2,26 @@ import { useEffect, useState } from 'react';
 import CurrentForecast from './components/CurrentForecast';
 import HourlyForecast from './components/HourlyForecast';
 import Navigation from './components/Navigation';
-import WeeklyForecast from './components/WeeklyForecast';
 import useGeolocation from './hooks/useGeolocation';
 import { forecastWeatherAPI } from './data/weatherAPI';
 import type { ForecastType } from './types/forecast';
-// import weatherCodes from './constants/weatherCodes';
-
-// find icon by condition code
-// console.log(
-//   weatherCodes.find((val) => val.codes.includes(forecast?.condition.code))
-//     ?.icon,
-// );
+import { useUnits } from './contexts/UnitsContext';
+import WeeklyForecast from './components/WeeklyForecast';
+import { detectIcon } from './utils/icons';
 
 function App() {
   const [position, isLoading, requestAgain] = useGeolocation();
   const [weatherData, setWeatherData] = useState<ForecastType | null>(null);
+  const { temperatureUnit, windSpeed, precipitation } = useUnits();
 
   useEffect(() => {
     async function fetchWeatherData() {
-      const forecast = (await forecastWeatherAPI()) as ForecastType;
+      const forecast = (await forecastWeatherAPI('', position)) as ForecastType;
       setWeatherData(forecast);
     }
 
     fetchWeatherData();
-  }, []);
-
-  console.log(weatherData);
+  }, [position]);
 
   return (
     <div className='min-h-screen bg-sky-900 px-32 py-12 text-gray-50'>
@@ -35,11 +29,38 @@ function App() {
 
       <main className='mt-8 grid grid-cols-[2fr_1fr] gap-x-6 gap-y-10 *:rounded-lg'>
         <CurrentForecast
-          locationName={position?.join(' ') || 'Berlin, Germany'}
+          locationName={`${weatherData?.city}, ${weatherData?.country}`}
+          currentDate={weatherData?.localTime}
+          currentDegree={
+            temperatureUnit === 'celsius'
+              ? weatherData?.temperatureCelsius
+              : weatherData?.temperatureFahrenheit
+          }
+          weatherIcon={detectIcon(weatherData?.condition.code)}
+          feelslike={
+            temperatureUnit === 'celsius'
+              ? weatherData?.feelsLikeCelsius
+              : weatherData?.feelsLikeFahrenheit
+          }
+          humidity={weatherData?.humidity}
+          currentPrecipitation={
+            precipitation === 'mm'
+              ? weatherData?.precipitationMM
+              : weatherData?.precipitationIN
+          }
+          windVelocity={
+            windSpeed === 'kmh' ? weatherData?.windKmh : weatherData?.windMph
+          }
           isLoading={isLoading || !weatherData}
         />
-        <HourlyForecast isLoading={isLoading || !weatherData} />
-        <WeeklyForecast isLoading={isLoading || !weatherData} />
+        <HourlyForecast
+          hourlyForecast={weatherData?.hourlyForecast}
+          isLoading={isLoading || !weatherData}
+        />
+        <WeeklyForecast
+          weeklyForecast={weatherData?.weeklyForecast}
+          isLoading={isLoading || !weatherData}
+        />
       </main>
     </div>
   );
