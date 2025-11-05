@@ -5,13 +5,16 @@ import App from './App.tsx';
 import { Toaster } from 'react-hot-toast';
 import { UnitsContextProvider } from './contexts/UnitsContext.tsx';
 import { PlacesContextProvider } from './contexts/PlacesContext.tsx';
+import { CountriesContextProvider } from './contexts/CountriesContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UnitsContextProvider>
-      <PlacesContextProvider>
-        <App />
-      </PlacesContextProvider>
+      <CountriesContextProvider>
+        <PlacesContextProvider>
+          <App />
+        </PlacesContextProvider>
+      </CountriesContextProvider>
     </UnitsContextProvider>
     <Toaster
       position='top-center'

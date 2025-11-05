@@ -1,75 +1,21 @@
-# React + TypeScript + Vite
+# Skylytics: Daily Forecast
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Stay ahead of the weather with Skylytics, your smart and easy-to-use weather website. Instantly get accurate daily forecasts based on your current GPS location or search for any city worldwide. Save your favorite places to quickly check temperature, wind speed, and weather conditions anytime.
 
-Currently, two official plugins are available:
+> [!IMPORTANT]
+> Responsive Design may be implemented occasionally; however, due to time constraints, I cannot fully optimize the site for all screen sizes. For the best experience, it's recommended to view the website on a larger screens.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## OVERVIEW
 
-## React Compiler
+### Technologies used to build
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- ReactJS - https://react.dev/
+- TypeScript - https://www.typescriptlang.org/
+- Tailwind CSS - https://tailwindcss.com/
+- React Hot Toast - https://react-hot-toast.com/
+- Hero Icons - https://github.com/tailwindlabs/heroicons
+- React Icons - https://react-icons.github.io/react-icons/
 
-Note: This will impact Vite dev & build performances.
+## AUTHOR
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Created by - Ibrahim Ismayilov.

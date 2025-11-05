@@ -23,7 +23,9 @@ function Favorites() {
         Favorite Places
       </button>
 
-      {isFavoritesActive && <FavoritesContainer />}
+      {isFavoritesActive && (
+        <FavoritesContainer handleClose={handleUnitsMenu} />
+      )}
     </div>
   );
 }

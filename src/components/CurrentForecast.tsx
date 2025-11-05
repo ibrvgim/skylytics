@@ -1,6 +1,6 @@
-import { StarIcon } from '@heroicons/react/24/solid';
 import { formatDate } from '../utils/dates';
 import { useUnits } from '../contexts/UnitsContext';
+import AddToFavoriteButton from './AddToFavoriteButton';
 
 function CurrentForecast({
   locationName,
@@ -32,12 +32,7 @@ function CurrentForecast({
           <span className='mini-loader mx-auto flex flex-col'></span>
         ) : (
           <>
-            <button
-              className='absolute top-5 right-5 h-7 w-7 cursor-pointer text-yellow-400'
-              title='Add to Favorites'
-            >
-              <StarIcon />
-            </button>
+            <AddToFavoriteButton locationName={locationName} />
 
             <span className='block w-1/2'>
               <p className='mb-2 text-4xl font-bold -tracking-wide'>

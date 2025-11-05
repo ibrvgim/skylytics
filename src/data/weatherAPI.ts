@@ -2,11 +2,12 @@ import type { ConditionType } from '../types/forecast';
 
 export async function forecastWeatherAPI(
   searchRequest?: string,
+  searchRequestOnBackground?: string,
   gpsRequest?: [number, number] | null,
 ) {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_KEY}&q=${searchRequest || gpsRequest?.join(',') || 'berlin'}&aqi=no&days=8`,
+      `http://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_KEY}&q=${searchRequest || searchRequestOnBackground || gpsRequest?.join(',') || 'berlin'}&aqi=no&days=8`,
     );
 
     if (!response.ok)
@@ -37,8 +38,6 @@ export async function forecastWeatherAPI(
         };
       },
     );
-
-    console.log(weeklyForecast);
 
     const hourlyForecast = data.forecast.forecastday[0].hour.map(
       (val: {

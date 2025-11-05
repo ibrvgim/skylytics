@@ -8,20 +8,27 @@ import type { ForecastType } from './types/forecast';
 import { useUnits } from './contexts/UnitsContext';
 import WeeklyForecast from './components/WeeklyForecast';
 import { detectIcon } from './utils/icons';
+import { usePlaces } from './contexts/PlacesContext';
 
 function App() {
   const [position, isLoading, requestAgain] = useGeolocation();
-  const [weatherData, setWeatherData] = useState<ForecastType | null>(null);
   const { temperatureUnit, windSpeed, precipitation } = useUnits();
+  const { searchPlace, searchPlaceOnBackground } = usePlaces();
+
+  const [weatherData, setWeatherData] = useState<ForecastType | null>(null);
 
   useEffect(() => {
     async function fetchWeatherData() {
-      const forecast = (await forecastWeatherAPI('', position)) as ForecastType;
+      const forecast = (await forecastWeatherAPI(
+        searchPlace,
+        searchPlaceOnBackground,
+        position,
+      )) as ForecastType;
       setWeatherData(forecast);
     }
 
     fetchWeatherData();
-  }, [position]);
+  }, [position, searchPlace, searchPlaceOnBackground]);
 
   return (
     <div className='min-h-screen bg-sky-900 px-32 py-12 text-gray-50'>

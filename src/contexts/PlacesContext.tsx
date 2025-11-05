@@ -3,6 +3,7 @@ import type { PlacesAction, PlacesStateType } from '../types/places-context';
 
 const initialState: PlacesStateType = {
   searchPlace: '',
+  searchPlaceOnBackground: '',
   activeSearchContainer: false,
 };
 
@@ -12,7 +13,17 @@ function reducer(
 ): PlacesStateType {
   switch (action.type) {
     case 'searchPlace':
-      return { ...state, searchPlace: action.payload };
+      return {
+        ...state,
+        activeSearchContainer: true,
+        searchPlace: action.payload,
+      };
+
+    case 'searchPlaceOnBackground':
+      return {
+        ...state,
+        searchPlaceOnBackground: action.payload,
+      };
 
     case 'toggleResultsContainer': {
       return {
@@ -41,6 +52,7 @@ export function PlacesContextProvider({
 
   const value = {
     searchPlace: state.searchPlace,
+    searchPlaceOnBackground: state.searchPlaceOnBackground,
     activeSearchContainer: state.activeSearchContainer,
     dispatch,
   };

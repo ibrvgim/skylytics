@@ -14,36 +14,37 @@ function HourlyForecast({
 }) {
   const { temperatureUnit } = useUnits();
 
+  const filteredForecast = hourlyForecast
+    ?.filter((val) => {
+      const convertedDate = new Date(val.time);
+      return convertedDate.getTime() > currentDate.getTime();
+    })
+    .slice(0, 10);
+
   return (
     <div className='row-span-2 overflow-auto border border-sky-700 bg-sky-800 px-5 py-6'>
       <p className='mb-6 text-lg font-medium'>Hourly Forecast</p>
 
       <ul className='relative flex flex-col gap-2 overflow-auto'>
         {isLoading
-          ? Array.from({ length: 10 }, (_, index) => index + 1).map((val) => (
-              <HourlyForecastLoadingItem key={val} />
-            ))
-          : hourlyForecast
-              ?.filter((val) => {
-                const convertedDate = new Date(val.time);
-                return convertedDate.getTime() > currentDate.getTime();
-              })
-
-              .slice(0, 10)
-              .map((val) => {
-                return (
-                  <HourlyForecastItem
-                    key={val.time.toString()}
-                    iconPath={detectIcon(val.condition.code)}
-                    degree={
-                      temperatureUnit === 'celsius'
-                        ? val.temperatureCelsius
-                        : val.temperatureFahrenheit
-                    }
-                    time={val.time}
-                  />
-                );
-              })}
+          ? Array.from(
+              { length: filteredForecast?.length || 10 },
+              (_, index) => index + 1,
+            ).map((val) => <HourlyForecastLoadingItem key={val} />)
+          : filteredForecast?.map((val) => {
+              return (
+                <HourlyForecastItem
+                  key={val.time.toString()}
+                  iconPath={detectIcon(val.condition.code)}
+                  degree={
+                    temperatureUnit === 'celsius'
+                      ? val.temperatureCelsius
+                      : val.temperatureFahrenheit
+                  }
+                  time={val.time}
+                />
+              );
+            })}
       </ul>
     </div>
   );

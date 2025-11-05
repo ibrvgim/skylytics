@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { usePlaces } from '../contexts/PlacesContext';
 
 interface InitialStateType {
   position: [number, number] | null;
@@ -15,9 +16,12 @@ function useGeolocation(): [[number, number] | null, boolean, () => void] {
   const [locationData, setLocationData] = useState(initialState);
   const [trigger, setTrigger] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const { dispatch } = usePlaces();
 
   function requestAgain() {
     setTrigger((count) => count + 1);
+    dispatch({ type: 'searchPlace', payload: '' });
+    dispatch({ type: 'searchPlaceOnBackground', payload: '' });
   }
 
   function setError(value: string | null) {
