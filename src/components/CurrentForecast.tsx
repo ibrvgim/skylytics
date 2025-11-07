@@ -27,34 +27,36 @@ function CurrentForecast({
 
   return (
     <div>
-      <div className='relative flex h-72 items-center justify-between bg-[url(/images/bg-today.svg)] bg-cover bg-center bg-no-repeat px-12 py-20'>
+      <div className='relative flex flex-col justify-between bg-[url(/images/bg-today.svg)] bg-cover bg-center bg-no-repeat px-12 py-20 sm:h-72 sm:flex-row sm:items-center'>
         {isLoading ? (
           <span className='mini-loader mx-auto flex flex-col'></span>
         ) : (
           <>
             <AddToFavoriteButton locationName={locationName} />
 
-            <span className='block w-1/2'>
+            <span className='block sm:w-1/2'>
               <p className='mb-2 text-4xl font-bold -tracking-wide'>
                 {locationName}
               </p>
               <p>{formatDate(currentDate)}</p>
             </span>
 
-            <span className='flex items-center gap-2 text-7xl font-bold'>
+            <span className='flex items-center text-7xl font-bold sm:gap-2'>
+              <span className='inline-block sm:hidden'>{`${currentDegree}°`}</span>
+
               <img
                 src={`/icons/${weatherIcon}`}
                 alt={weatherIcon}
                 className='h-32 w-32'
                 draggable={false}
               />
-              {`${currentDegree}°`}
+              <span className='hidden sm:inline-block'>{`${currentDegree}°`}</span>
             </span>
           </>
         )}
       </div>
 
-      <ul className='mt-6 flex justify-between gap-3'>
+      <ul className='mt-6 grid grid-cols-2 gap-3 xl:grid-cols-4'>
         <ConditionItem
           title='Feels like'
           value={isLoading ? '-/-' : `${feelslike}°`}

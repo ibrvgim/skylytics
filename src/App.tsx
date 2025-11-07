@@ -31,10 +31,10 @@ function App() {
   }, [position, searchPlace, searchPlaceOnBackground]);
 
   return (
-    <div className='min-h-screen bg-sky-900 px-32 py-12 text-gray-50'>
+    <div className='min-h-screen bg-sky-900 px-4 py-12 text-gray-50 sm:px-12 lg:px-20 xl:px-32'>
       <Navigation requestGeolocation={requestAgain} />
 
-      <main className='mt-8 grid grid-cols-[2fr_1fr] gap-x-6 gap-y-10 *:rounded-lg'>
+      <main className='mt-8 grid gap-x-6 gap-y-10 *:rounded-lg lg:grid-cols-[2fr_1fr]'>
         <CurrentForecast
           locationName={`${weatherData?.city}, ${weatherData?.country}`}
           currentDate={weatherData?.localTime}

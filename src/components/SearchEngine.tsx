@@ -27,7 +27,7 @@ function SearchEngine({
   );
 
   return (
-    <div ref={htmlElement} className='relative mx-auto w-1/3'>
+    <div ref={htmlElement} className='relative mx-auto sm:w-1/2 lg:w-1/3'>
       <label
         className='absolute top-1/2 left-3 -translate-y-1/2 text-gray-200'
         htmlFor='searchCity'

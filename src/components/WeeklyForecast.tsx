@@ -16,7 +16,7 @@ function WeeklyForecast({
     <div>
       <p className='mb-5 text-lg font-medium'>Weekly Forecast</p>
 
-      <ul className='flex justify-between gap-2'>
+      <ul className='grid grid-cols-2 gap-2 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-5 xl:grid-cols-7'>
         {isLoading ? (
           Array.from({ length: 7 }, (_, index) => index + 1).map((val) => (
             <DailyForecastLoadingItem key={val} />
@@ -68,7 +68,7 @@ function DailyForecastItem({
         draggable={false}
       />
 
-      <span className='flex justify-between'>
+      <span className='flex justify-between text-xl font-medium sm:text-base sm:font-normal'>
         <span>{`${minDegree}°`}</span>
         <span>{`${maxDegree}°`}</span>
       </span>

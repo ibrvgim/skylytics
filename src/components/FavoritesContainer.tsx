@@ -108,14 +108,14 @@ function FavoriteItem({
 
 function FavoriteLoadingItem() {
   return (
-    <li className='flex items-center justify-between overflow-hidden rounded-md border border-sky-600 bg-sky-700 px-4 py-2 shadow-sm'>
+    <div className='flex items-center justify-between overflow-hidden rounded-md border border-sky-600 bg-sky-700 px-4 py-2 shadow-sm'>
       <span className='flex items-center gap-2'>
         <div className='h-10 w-10 animate-pulse rounded-md bg-sky-600/60' />
         <div className='h-5 w-28 animate-pulse rounded bg-sky-600/60' />
       </span>
 
       <div className='h-5 w-8 animate-pulse rounded bg-sky-600/60' />
-    </li>
+    </div>
   );
 }
 

@@ -20,7 +20,7 @@ function Favorites() {
         <span className='h-5 w-5'>
           <StarIcon />
         </span>
-        Favorite Places
+        <span className='hidden sm:inline-block'>Favorite Places</span>
       </button>
 
       {isFavoritesActive && (

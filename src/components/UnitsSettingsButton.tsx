@@ -20,7 +20,8 @@ function UnitsSettingsButton() {
         <span className='h-5 w-5'>
           <Cog6ToothIcon />
         </span>
-        Units
+
+        <span className='hidden sm:inline-block'>Units</span>
       </button>
 
       {isUnitsActive && <UnitsSettingsContainer />}

@@ -19,7 +19,7 @@ function Navigation({
         </span>
       </div>
 
-      <p className='mb-12 text-center text-4xl font-bold tracking-wider'>
+      <p className='mb-12 text-center text-3xl font-bold tracking-wider sm:text-4xl'>
         How's the sky looking today?
       </p>
 
