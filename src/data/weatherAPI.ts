@@ -7,7 +7,7 @@ export async function forecastWeatherAPI(
 ) {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_KEY}&q=${searchRequest || searchRequestOnBackground || gpsRequest?.join(',') || 'berlin'}&aqi=no&days=8`,
+      `https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_KEY}&q=${searchRequest || searchRequestOnBackground || gpsRequest?.join(',') || 'berlin'}&aqi=no&days=8`,
     );
 
     if (!response.ok)
